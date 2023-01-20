@@ -347,7 +347,7 @@ resource "aws_db_instance" "project_db" {
 }
 ```
 
-The final piece is the database tier. We will create an RDS MYSQL database instance in one of the private subnets. In order to do this we need to add a database subnet group and put in our 2 private subnets. Then associate it with our database instance as well as the private security group. Notice the “identifier” names the database instance and “db_name” actually prompts it to create a database. You need to add a username and password to access the database. The way I have it is not secure. You could put the secrets in a *    tfvars file and reference it when applying the code. And that concludes the creation of the main file.
+The final piece is the database tier. We will create an RDS MYSQL database instance in one of the private subnets. In order to do this we need to add a database subnet group and put in our 2 private subnets. Then associate it with our database instance as well as the private security group. Notice the “identifier” names the database instance and “db_name” actually prompts it to create a database. You need to add a username and password to access the database. The way I have it is not secure. You could put the secrets in a **tfvars file** and reference it when applying the code. And that concludes the creation of the **main file**.
   
 I am going to add one more file to our project. Create a file called **outputs.tf** in the same directory as the main file. Here we can indicate what outputs we want to see. They are used as a way to share data with other tools or automation. I will just use it to gather the information needed to access the instances. Copy and paste the gist below into your file.
   
