@@ -26,6 +26,7 @@ The project we are creating will be considered a monolith, we will have a single
 ### Write
 First we need to create the code by using HashiCorp Configuration Language (HCL). I will be using VSCode IDE to input my code. You will need to create a new directory for your Terraform project, I called mine Two-tier-project. Navigate into that directory using the terminal in VSCode type in cd <directory>. Then create a new file main.tf in that directory. You can copy and paste from my code gists below to create a single file. You can also modify or create your own. I used the terraform registry to help build my code. Now lets break up the code to explain each part in detail.
   
+```  
 terraform {
   required_providers {
     aws = {
@@ -104,3 +105,4 @@ resource "aws_subnet" "private_2" {
     Name = "private-2"
   }
 }
+```  
