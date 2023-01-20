@@ -105,4 +105,168 @@ resource "aws_subnet" "private_2" {
     Name = "private-2"
   }
 }
+```
+
+In this first snippet of code we are letting Terraform know what cloud provider we will be using and configuring to that provider, AWS. Next we are creating resources. The first resource is creating a custom VPC with CIDR 10.0.0.0/16. Next it creates an internet gateway to attach to the VPC. Following that we create 2 public subnets with CIDR 10.0.1.0/24 and 10.0.2.0/24. Each subnet is in a different availability zone; us-east-1a and us-east-1b. For high availability. Then we create 2 private subnets with CIDR 10.0.3.0/24 and 10.0.4.0/24, also in 2 different availability zones. Notice the public subnets map public IP on launch where as the private subnets do not, this is why they are “private”.
+  
 ```  
+# Create route table to internet gateway
+resource "aws_route_table" "project_rt" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.ig.id
+  }
+    tags = {
+    Name = "project-rt"
+  }
+}
+
+# Associate public subnets with route table
+resource "aws_route_table_association" "public_route_1" {
+  subnet_id      = aws_subnet.public_1.id
+  route_table_id = aws_route_table.project_rt.id
+}
+
+resource "aws_route_table_association" "public_route_2" {
+  subnet_id      = aws_subnet.public_2.id
+  route_table_id = aws_route_table.project_rt.id
+}
+
+# Create security groups
+resource "aws_security_group" "public_sg" {
+  name        = "public-sg"
+  description = "Allow web and ssh traffic"
+  vpc_id      = aws_vpc.vpc.id
+
+  ingress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port         = 22
+    to_port           = 22
+    protocol          = "tcp"
+    cidr_blocks       = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+
+  }
+}
+
+resource "aws_security_group" "private_sg" {
+  name        = "private-sg"
+  description = "Allow web tier and ssh traffic"
+  vpc_id      = aws_vpc.vpc.id
+
+  ingress {
+    from_port        = 3306
+    to_port          = 3306
+    protocol         = "tcp"
+    cidr_blocks      = ["10.0.0.0/16"]
+    security_groups = [ aws_security_group.public_sg.id ]
+  }
+  ingress {
+    from_port         = 22
+    to_port           = 22
+    protocol          = "tcp"
+    cidr_blocks       = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+
+  }
+}
+```
+  
+Here we are creating a route table to route traffic through the internet gateway to have internet access to the VPC. We then need to associate our subnets with the route table. Only granting access to the public subnets. Next we create security groups. The first security group is for the public subnets. It will allow incoming web access on port 80 (HTTP) as well as SSH access. The second security group will be for the private subnets to only allow access from the security group via the web tier and SSH access. The port 3306, being the default port for MYSQL.
+  
+```
+# Security group for ALB
+resource "aws_security_group" "alb_sg" {
+  name        = "alb-sg"
+  description = "security group for alb"
+  vpc_id      = aws_vpc.vpc.id
+
+  ingress {
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create ALB
+resource "aws_lb" "project_alb" {
+  name               = "alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb_sg.id]
+  subnets            = [aws_subnet.public_1.id, aws_subnet.public_2.id]
+}
+
+# Create ALB target group
+resource "aws_lb_target_group" "project_tg" {
+  name     = "project-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.vpc.id
+
+  depends_on = [aws_vpc.vpc]
+}
+
+# Create target attachments
+resource "aws_lb_target_group_attachment" "tg_attach1" {
+  target_group_arn = aws_lb_target_group.project_tg.arn
+  target_id        = aws_instance.web1.id
+  port             = 80
+
+  depends_on = [aws_instance.web1]
+}
+
+resource "aws_lb_target_group_attachment" "tg_attach2" {
+  target_group_arn = aws_lb_target_group.project_tg.arn
+  target_id        = aws_instance.web2.id
+  port             = 80
+
+  depends_on = [aws_instance.web2]
+}
+
+# Create listener
+resource "aws_lb_listener" "listener_lb" {
+  load_balancer_arn = aws_lb.project_alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.project_tg.arn
+  }
+}
+```
+  
+This gist is all about the load balancer. This was tricky to figure out. I kept getting health check errors on my EC2 instances. So I add a security group for my load balancer. Then we create a application load balancer that is internet facing. With the load balancer you need the following:
+  
+* Target group.
+  
+* Target attachments, your EC2 instances.
+  
+* A listener on port 80.
+  
+  
