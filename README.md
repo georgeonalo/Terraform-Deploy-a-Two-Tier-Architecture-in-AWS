@@ -13,7 +13,7 @@ In this project, we will dive into Terraform. Terraform is a open-source Infrast
 
 ![image](https://user-images.githubusercontent.com/115881685/213697103-7457f4b3-5b8c-4799-98dd-903f898d5f9f.png)
 
-### Prerequisites
+#### Prerequisites
 
 * AWS account with credentials and a keypair.
 
@@ -23,7 +23,7 @@ In this project, we will dive into Terraform. Terraform is a open-source Infrast
 
 The project we are creating will be considered a monolith, we will have a single main configuration file in a single directory. This is a small project to practice working with and understanding Terraform. At some point it may be safer and more logical to break up the monolith. But for now let’s move forward with the monolith.
 
-### Write
+#### Write
 First we need to create the code by using HashiCorp Configuration Language (HCL). I will be using VSCode IDE to input my code. You will need to create a new directory for your Terraform project, I called mine Two-tier-project. Navigate into that directory using the terminal in VSCode type in cd <directory>. Then create a new file main.tf in that directory. You can copy and paste from my code gists below to create a single file. You can also modify or create your own. I used the terraform registry to help build my code. Now lets break up the code to explain each part in detail.
   
 ```  
@@ -319,7 +319,11 @@ resource "aws_instance" "web2" {
     Name = "web2_instance"
   }
 }
-
+```
+    
+Here we create the EC2 instances that will be launched into each public subnet. The EC2 instances have Amazon Linuz AMI and instance type t2.micro. I attached my keypair and associated a public IP address in order to SSH into the instance. I also added a bootstrap in the user_data section. This will install an Apache webserver upon launch. That will conclude the web tier.
+  
+```  
 # Database subnet group
 resource "aws_db_subnet_group" "db_subnet"  {
     name       = "db-subnet"
@@ -342,5 +346,50 @@ resource "aws_db_instance" "project_db" {
   skip_final_snapshot  = true
 }
 ```
+
+The final piece is the database tier. We will create an RDS MYSQL database instance in one of the private subnets. In order to do this we need to add a database subnet group and put in our 2 private subnets. Then associate it with our database instance as well as the private security group. Notice the “identifier” names the database instance and “db_name” actually prompts it to create a database. You need to add a username and password to access the database. The way I have it is not secure. You could put the secrets in a *    tfvars file and reference it when applying the code. And that concludes the creation of the main file.
   
+I am going to add one more file to our project. Create a file called * outputs.tf in the same directory as the main file. Here we can indicate what outputs we want to see. They are used as a way to share data with other tools or automation. I will just use it to gather the information needed to access the instances. Copy and paste the gist below into your file.
   
+```  
+# Outputs
+# Ec2 instance public ipv4 address
+output "ec2_public_ip" {
+  value = aws_instance.web1.public_ip
+}
+
+# Db instance address
+output "db_instance_address" {
+    value = aws_db_instance.project_db.address
+}
+
+# Getting the DNS of load balancer
+output "lb_dns_name" {
+  description = "The DNS name of the load balancer"
+  value       = "${aws_lb.project_alb.dns_name}"
+}
+```
+  
+#### Plan
+Now that our code is written we can move on to the terminal. Input the command * terraform init. To download libraries and modules needed, initialize the working directory that contains your Terraform code and set up the backend.
+  
+![2](https://user-images.githubusercontent.com/115881685/213705141-647e5264-f055-4466-8cd7-63881a1cdc7b.png)
+
+Next input * terraform plan. This will read the code, create and show you a plan of action.
+  
+ ![4](https://user-images.githubusercontent.com/115881685/213705421-f1d22c28-7beb-437a-9a93-e21c32602523.png)
+  
+Review the plan carefully. Once you decide it is just right move on to the next stage.
+  
+#### Apply
+When you apply the code it deploys and provisions your infrastructure. Terraform also updates a deployment state tracking mechanism called a “state file”. This file will appear in your directory as terraform.tfstate. To apply the code enter the command terraform apply. You will be prompted to accept the actions that will be performed by Terraform, enter “yes”. It will take some time to provision your resources.
+  
+![image](https://user-images.githubusercontent.com/115881685/213705908-
+ 6a3703a4-a40b-4a65-a300-60c0f90bfa43.png)
+  
+ ![6](https://user-images.githubusercontent.com/115881685/213706085-361a7311-8b72-44f8-8535-073ecb440947.png)
+
+  
+
+
+ 
