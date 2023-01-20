@@ -269,4 +269,78 @@ This gist is all about the load balancer. This was tricky to figure out. I kept 
   
 * A listener on port 80.
   
+```  
+# Create ec2 instances
+
+resource "aws_key_pair" "MyKey_auth" {
+  key_name = "MyKey"
+  public_key = file("~/.ssh/MyKey.pub")
+}
+
+resource "aws_instance" "web1" {
+  ami           = "ami-0cff7528ff583bf9a"
+  instance_type = "t2.micro"
+  key_name          = "MyKey"
+  availability_zone = "us-east-1a"
+  vpc_security_group_ids      = [aws_security_group.public_sg.id]
+  subnet_id                   = aws_subnet.public_1.id
+  associate_public_ip_address = true
+  user_data = <<-EOF
+        #!/bin/bash
+        yum update -y
+        yum install httpd -y
+        systemctl start httpd
+        systemctl enable httpd
+        echo "<html><body><h1>Hi there</h1></body></html>" > /var/www/html/index.html
+        EOF
+
+  tags = {
+    Name = "web1_instance"
+  }
+}
+resource "aws_instance" "web2" {
+  ami           = "ami-0cff7528ff583bf9a"
+  instance_type = "t2.micro"
+  key_name          = "MyKey"
+  availability_zone = "us-east-1b"
+  vpc_security_group_ids      = [aws_security_group.public_sg.id]
+  subnet_id                   = aws_subnet.public_2.id
+  associate_public_ip_address = true
+  user_data = <<-EOF
+        #!/bin/bash
+        yum update -y
+        yum install httpd -y
+        systemctl start httpd
+        systemctl enable httpd
+        echo "<html><body><h1>Hi there again</h1></body></html>" > /var/www/html/index.html
+        EOF
+
+  tags = {
+    Name = "web2_instance"
+  }
+}
+
+# Database subnet group
+resource "aws_db_subnet_group" "db_subnet"  {
+    name       = "db-subnet"
+    subnet_ids = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+}
+
+# Create database instance
+resource "aws_db_instance" "project_db" {
+  allocated_storage    = 5
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t3.micro"
+  identifier           = "db-instance"
+  db_name              = "project_db"
+  username             = "admin"
+  password             = "password"
+  db_subnet_group_name = aws_db_subnet_group.db_subnet.id
+  vpc_security_group_ids = [aws_security_group.private_sg.id]  
+  publicly_accessible = false
+  skip_final_snapshot  = true
+}
+```
+  
   
