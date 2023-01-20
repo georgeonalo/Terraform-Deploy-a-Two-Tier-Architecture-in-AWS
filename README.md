@@ -384,10 +384,20 @@ Review the plan carefully. Once you decide it is just right move on to the next 
 #### Apply
 When you apply the code it deploys and provisions your infrastructure. Terraform also updates a deployment state tracking mechanism called a “state file”. This file will appear in your directory as **terraform.tfstate**. To apply the code enter the command **terraform apply**. You will be prompted to accept the actions that will be performed by Terraform, enter “yes”. It will take some time to provision your resources.
   
-![image](https://user-images.githubusercontent.com/115881685/213710370-bf52f215-ca4f-4d5d-9d12-2b89f34d9849.png)
+![image](https://user-images.githubusercontent.com/115881685/213711994-e5d42488-e7f9-4940-9f69-30adad797d7b.png)
 
   
  ![6](https://user-images.githubusercontent.com/115881685/213706085-361a7311-8b72-44f8-8535-073ecb440947.png)
+  
+ 
+ And it worked! Believe me this was not the first attempt, I had many errors. You can check out all of your newly created resources in the AWS console!
+  
+ ![5](https://user-images.githubusercontent.com/115881685/213712556-152aa809-624e-4b5a-aba2-86a7b8bcff59.png)
+ ![7](https://user-images.githubusercontent.com/115881685/213712823-138256f0-4e31-4570-b86c-2ac26b3ec1f1.png)
+ ![8](https://user-images.githubusercontent.com/115881685/213712933-1b76d1fe-fd26-4adf-86d0-641db7994b08.png)
+ ![9](https://user-images.githubusercontent.com/115881685/213713061-22324b8d-802e-4dfa-ac78-458f3aa356a4.png)
+                      Target for ALB with 2 healthy instances
+ 
 
   
 
