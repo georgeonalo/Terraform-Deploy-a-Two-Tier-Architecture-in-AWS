@@ -413,8 +413,34 @@ Now lets see if we can SSH into our instance. Input the following code below inc
 ```  
 ssh -A ec2-user@<your instance ip>
 ```
+  
+You will be brought to the Amazon linux AMI. So we successfully SSH into the instance.
+  
+![11](https://user-images.githubusercontent.com/115881685/213715972-e33088c0-13dc-44e6-9938-9a3f63dd1c19.png)
 
+From here we can attempt to access the database tier. First install **mariadb** **sudo yum install mariadb**. Then input the following code. Include the database instance address from the Outputs after **-h**. 
+  
+```  
+mysql -h db-instance.cm4bp7mgz27s.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+```
+  
+You will be prompted to enter the password you created.
   
 
+![image](https://user-images.githubusercontent.com/115881685/213716752-0aeacacd-84bb-4bfa-8798-03d0cd6bba90.png)
 
+We were able to connect. Now lets see if our RDS MYSQL database made it in here. Input **SHOW DATABASES**;.
+  
+![image](https://user-images.githubusercontent.com/115881685/213716970-6432a0cf-742a-413e-83ec-daa1bfa14a71.png)
+
+
+There is the database we named in the code. Now that we see everything is up and running and working together we can move to the final step.
+  
+#### Destroy
+  
+Now we will destroy all of the hard work we put into building this thing, I am kind of excited. Enter the command **terraform destroy**. It will ask you if you really want to destroy all resources, enter yes when ready.
+  
+![12](https://user-images.githubusercontent.com/115881685/213717688-70bfa71d-ad3e-42b5-b630-eab1f434075f.png)
+
+That concludes creating a two tier architecture in AWS using Terraform. Terraform is an amazing tool and I plan to break up the monolith in the future and use variables and modules.
  
