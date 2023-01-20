@@ -371,21 +371,21 @@ output "lb_dns_name" {
 ```
   
 #### Plan
-Now that our code is written we can move on to the terminal. Input the command * terraform init. To download libraries and modules needed, initialize the working directory that contains your Terraform code and set up the backend.
+Now that our code is written we can move on to the terminal. Input the command **terraform init**. To download libraries and modules needed, initialize the working directory that contains your Terraform code and set up the backend.
   
 ![2](https://user-images.githubusercontent.com/115881685/213705141-647e5264-f055-4466-8cd7-63881a1cdc7b.png)
 
-Next input * terraform plan. This will read the code, create and show you a plan of action.
+Next input **terraform plan**. This will read the code, create and show you a plan of action.
   
  ![4](https://user-images.githubusercontent.com/115881685/213705421-f1d22c28-7beb-437a-9a93-e21c32602523.png)
   
 Review the plan carefully. Once you decide it is just right move on to the next stage.
   
 #### Apply
-When you apply the code it deploys and provisions your infrastructure. Terraform also updates a deployment state tracking mechanism called a “state file”. This file will appear in your directory as terraform.tfstate. To apply the code enter the command terraform apply. You will be prompted to accept the actions that will be performed by Terraform, enter “yes”. It will take some time to provision your resources.
+When you apply the code it deploys and provisions your infrastructure. Terraform also updates a deployment state tracking mechanism called a “state file”. This file will appear in your directory as **terraform.tfstate**. To apply the code enter the command **terraform apply**. You will be prompted to accept the actions that will be performed by Terraform, enter “yes”. It will take some time to provision your resources.
   
-![image](https://user-images.githubusercontent.com/115881685/213705908-
- 6a3703a4-a40b-4a65-a300-60c0f90bfa43.png)
+![image](https://user-images.githubusercontent.com/115881685/213710370-bf52f215-ca4f-4d5d-9d12-2b89f34d9849.png)
+
   
  ![6](https://user-images.githubusercontent.com/115881685/213706085-361a7311-8b72-44f8-8535-073ecb440947.png)
 
