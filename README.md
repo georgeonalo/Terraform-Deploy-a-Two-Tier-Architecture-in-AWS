@@ -24,7 +24,7 @@ In this project, we will dive into Terraform. Terraform is a open-source Infrast
 The project we are creating will be considered a monolith, we will have a single main configuration file in a single directory. This is a small project to practice working with and understanding Terraform. At some point it may be safer and more logical to break up the monolith. But for now let’s move forward with the monolith.
 
 #### Write
-First we need to create the code by using HashiCorp Configuration Language (HCL). I will be using VSCode IDE to input my code. You will need to create a new directory for your Terraform project, I called mine *Two-tier-project*. Navigate into that directory using the terminal in VSCode type in cd <directory>. Then create a new file *main.tf* in that directory. You can copy and paste from my code gists below to create a single file. You can also modify or create your own. I used the terraform registry to help build my code. Now lets break up the code to explain each part in detail.
+First we need to create the code by using HashiCorp Configuration Language (HCL). I will be using VSCode IDE to input my code. You will need to create a new directory for your Terraform project, I called mine * Two-tier-project *. Navigate into that directory using the terminal in VSCode type in cd <directory>. Then create a new file * main.tf * in that directory. You can copy and paste from my code gists below to create a single file. You can also modify or create your own. I used the terraform registry to help build my code. Now lets break up the code to explain each part in detail.
   
 ```  
 terraform {
