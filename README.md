@@ -396,7 +396,11 @@ When you apply the code it deploys and provisions your infrastructure. Terraform
  ![7](https://user-images.githubusercontent.com/115881685/213712823-138256f0-4e31-4570-b86c-2ac26b3ec1f1.png)
  ![8](https://user-images.githubusercontent.com/115881685/213712933-1b76d1fe-fd26-4adf-86d0-641db7994b08.png)
  ![9](https://user-images.githubusercontent.com/115881685/213713061-22324b8d-802e-4dfa-ac78-458f3aa356a4.png)
-                      Target for ALB with 2 healthy instances
+                                     Target for ALB with 2 healthy instances
+ ![rds](https://user-images.githubusercontent.com/115881685/213713729-33bff9f0-5617-4824-8b51-947acabdc570.png)
+ ![rds1](https://user-images.githubusercontent.com/115881685/213713845-ca3c8af6-b8d1-4813-bdec-920bc0f75180.png)
+ ![rds2](https://user-images.githubusercontent.com/115881685/213713942-e796c27d-d145-4161-8f8d-5b001ebf6cbf.png)
+
  
 
   
