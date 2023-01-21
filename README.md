@@ -420,8 +420,10 @@ Now lets see if we can SSH into our instance. Input the following code below inc
 ssh -A ec2-user@<your instance ip>
 ```
   
-You will be brought to the Amazon linux AMI. So we successfully SSH into the instance.
   ![4](https://user-images.githubusercontent.com/115881685/213863602-43589e1c-faae-4ef8-874d-c37eb1890314.png)
+  
+You will be brought to the Amazon linux AMI. So we successfully SSH into the instance.
+  
 
 From here we can attempt to access the database tier. First install **mariadb** **sudo yum install mariadb**. Then input the following code. Include the database instance address from the Outputs after **-h**. 
   
