@@ -386,8 +386,7 @@ When you apply the code it deploys and provisions your infrastructure. Terraform
   
 ![image](https://user-images.githubusercontent.com/115881685/213711994-e5d42488-e7f9-4940-9f69-30adad797d7b.png)
 
-  
- ![6](https://user-images.githubusercontent.com/115881685/213706085-361a7311-8b72-44f8-8535-073ecb440947.png)
+  ![1](https://user-images.githubusercontent.com/115881685/213863369-44df91b6-9faf-49c7-8d71-2187e14cffbd.png)
   
  
  And it worked! Believe me this was not the first attempt, I had many errors. You can check out all of your newly created resources in the AWS console!
@@ -404,7 +403,8 @@ When you apply the code it deploys and provisions your infrastructure. Terraform
  
  What is really awesome is that one of our outputs is the DNS name for the load balancer. Copy that and paste it in your browser. This will show if we are able to access the internet from the web tier.
   
-![10](https://user-images.githubusercontent.com/115881685/213714498-39b34dbe-7f2c-4755-a669-a94474cbc175.png)
+![2](https://user-images.githubusercontent.com/115881685/213863426-96967ce7-8bb2-45ac-a2af-15e6c946c422.png) ![3](https://user-images.githubusercontent.com/115881685/213863438-4a1d717d-319b-4985-bb7a-0d7742b47b22.png)
+
 
 And it was successful!
   
@@ -421,17 +421,16 @@ You will be brought to the Amazon linux AMI. So we successfully SSH into the ins
 From here we can attempt to access the database tier. First install **mariadb** **sudo yum install mariadb**. Then input the following code. Include the database instance address from the Outputs after **-h**. 
   
 ```  
-mysql -h db-instance.cm4bp7mgz27s.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+mysql -h db-instance.cinrc1votzp3.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
 ```
   
 You will be prompted to enter the password you created.
   
-
-![image](https://user-images.githubusercontent.com/115881685/213716752-0aeacacd-84bb-4bfa-8798-03d0cd6bba90.png)
+![5](https://user-images.githubusercontent.com/115881685/213863475-c75f61fe-f758-48c9-9f9d-c19db8617fdb.png)
 
 We were able to connect. Now lets see if our RDS MYSQL database made it in here. Input **SHOW DATABASES**;.
   
-![image](https://user-images.githubusercontent.com/115881685/213716970-6432a0cf-742a-413e-83ec-daa1bfa14a71.png)
+![7](https://user-images.githubusercontent.com/115881685/213863528-0fdb1334-1628-44be-9962-9ce07ecb12b4.png)
 
 
 There is the database we named in the code. Now that we see everything is up and running and working together we can move to the final step.
