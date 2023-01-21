@@ -392,7 +392,7 @@ When you apply the code it deploys and provisions your infrastructure. Terraform
  And it worked! Believe me this was not the first attempt, I had many errors. You can check out all of your newly created resources in the AWS console!
   
  ![5](https://user-images.githubusercontent.com/115881685/213712556-152aa809-624e-4b5a-aba2-86a7b8bcff59.png)
-                                                                VPC
+                                                                :VPC:
   
   
   
