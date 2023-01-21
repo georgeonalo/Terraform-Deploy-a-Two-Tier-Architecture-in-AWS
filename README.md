@@ -392,18 +392,24 @@ When you apply the code it deploys and provisions your infrastructure. Terraform
  And it worked! Believe me this was not the first attempt, I had many errors. You can check out all of your newly created resources in the AWS console!
   
  ![5](https://user-images.githubusercontent.com/115881685/213712556-152aa809-624e-4b5a-aba2-86a7b8bcff59.png)
+                                                                VPC
+  
  ![7](https://user-images.githubusercontent.com/115881685/213712823-138256f0-4e31-4570-b86c-2ac26b3ec1f1.png)
+                                                                 Subnet
+  
  ![8](https://user-images.githubusercontent.com/115881685/213712933-1b76d1fe-fd26-4adf-86d0-641db7994b08.png)
  ![9](https://user-images.githubusercontent.com/115881685/213713061-22324b8d-802e-4dfa-ac78-458f3aa356a4.png)
                                      Target for ALB with 2 healthy instances
+  
  ![rds](https://user-images.githubusercontent.com/115881685/213713729-33bff9f0-5617-4824-8b51-947acabdc570.png)
+                                                            Rds Database Instance
  ![rds1](https://user-images.githubusercontent.com/115881685/213713845-ca3c8af6-b8d1-4813-bdec-920bc0f75180.png)
  ![rds2](https://user-images.githubusercontent.com/115881685/213713942-e796c27d-d145-4161-8f8d-5b001ebf6cbf.png)
   
  
- What is really awesome is that one of our outputs is the DNS name for the load balancer. Copy that and paste it in your browser. This will show if we are able to access the internet from the web tier.
+ What is really awesome is that one of our outputs is the DNS name for the load balancer. Copy that and paste it in your browser. This will show if we are able to access the internet from the web tier. Note: Click refresh button to go between instances
   
-![2](https://user-images.githubusercontent.com/115881685/213863426-96967ce7-8bb2-45ac-a2af-15e6c946c422.png) ![3](https://user-images.githubusercontent.com/115881685/213863438-4a1d717d-319b-4985-bb7a-0d7742b47b22.png)
+![2](https://user-images.githubusercontent.com/115881685/213863426-96967ce7-8bb2-45ac-a2af-15e6c946c422.png)![3](https://user-images.githubusercontent.com/115881685/213863438-4a1d717d-319b-4985-bb7a-0d7742b47b22.png)
 
 
 And it was successful!
@@ -415,8 +421,7 @@ ssh -A ec2-user@<your instance ip>
 ```
   
 You will be brought to the Amazon linux AMI. So we successfully SSH into the instance.
-  
-![11](https://user-images.githubusercontent.com/115881685/213715972-e33088c0-13dc-44e6-9938-9a3f63dd1c19.png)
+  ![4](https://user-images.githubusercontent.com/115881685/213863602-43589e1c-faae-4ef8-874d-c37eb1890314.png)
 
 From here we can attempt to access the database tier. First install **mariadb** **sudo yum install mariadb**. Then input the following code. Include the database instance address from the Outputs after **-h**. 
   
