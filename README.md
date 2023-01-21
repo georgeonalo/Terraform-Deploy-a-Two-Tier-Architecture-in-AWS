@@ -402,7 +402,7 @@ When you apply the code it deploys and provisions your infrastructure. Terraform
                                      Target for ALB with 2 healthy instances
   
  ![rds](https://user-images.githubusercontent.com/115881685/213713729-33bff9f0-5617-4824-8b51-947acabdc570.png)
-                                                            Rds Database Instance
+                                      Rds Database Instance
  ![rds1](https://user-images.githubusercontent.com/115881685/213713845-ca3c8af6-b8d1-4813-bdec-920bc0f75180.png)
  ![rds2](https://user-images.githubusercontent.com/115881685/213713942-e796c27d-d145-4161-8f8d-5b001ebf6cbf.png)
   
