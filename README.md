@@ -1,7 +1,7 @@
 # Terraform-Deploy-a-Two-Tier-Architecture-in-AWS
 
 
-In this project, we will dive into Terraform. Terraform is a open-source Infrastructure as code tool. It enables you to build, change, and version resources in the cloud. You can work with multiple clouds using Terraform. For this article, we will be focusing on the AWS cloud. We will architect a 2-Tier Architecture that consists of the following:
+In this project, we will dive into Terraform. Terraform is a open-source Infrastructure as code tool. It enables you to build, change, and version resources in the cloud. You can work with multiple clouds using Terraform. For this project, we will be focusing on the AWS cloud. We will architect a 2-Tier Architecture that consists of the following:
 
 * A VPC with 2 public subnets and 2 private subnets.
 
