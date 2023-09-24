@@ -459,4 +459,3 @@ That concludes creating a two tier architecture in AWS using Terraform. Terrafor
  
 
 
-<img width="1512" alt="Screenshot 2023-09-23 at 21 45 46" src="https://github.com/georgeonalo/Terraform-Deploy-a-Two-Tier-Architecture-in-AWS/assets/115881685/5112ef4f-4e6a-43dd-aaaf-f712b87c3e58">
